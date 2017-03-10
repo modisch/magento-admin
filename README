@@ -3,6 +3,8 @@
 THIS IS NOT FOR MAGENTO 2 !!!!
 
 
+This extension creates a totally new skin for the administration tool. It creates toggleable menu on the left side, enhances graphic design, new font, colors, newly designed table highlighters, etc.
+
 Works well on Magento 1.9. 
 
 Should also be good for version 1.8. and 1.7, not yet tested though.
