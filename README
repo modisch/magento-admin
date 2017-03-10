@@ -1,0 +1,22 @@
+# magento-admin
+
+THIS IS NOT FOR MAGENTO 2 !!!!
+
+
+Works well on Magento 1.9. 
+
+Should also be good for version 1.8. and 1.7, not yet tested though.
+
+
+Installation:
+
+Make sure to backup your data before installing. 
+
+Upload the files to your root magento folder. No core files will be overriden.
+
+
+
+In case there is a conflict with any of your extensions, make sure to revert to your backup version. I am not responsible for any potential installation breaks.
+
+
+
