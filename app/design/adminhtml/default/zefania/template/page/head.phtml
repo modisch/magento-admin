@@ -1,0 +1,216 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<meta http-equiv="Content-Type" content="<?php echo $this->getContentType() ?>"/>
+<title><?php echo htmlspecialchars(html_entity_decode($this->getTitle())) ?></title>
+<link rel="icon" href="<?php echo $this->getSkinUrl('favicon.ico') ?>" type="image/x-icon"/>
+<link rel="shortcut icon" href="<?php echo $this->getSkinUrl('favicon.ico') ?>" type="image/x-icon"/>
+
+<script type="text/javascript">
+    var BLANK_URL = '<?php echo $this->getJsUrl() ?>blank.html';
+    var BLANK_IMG = '<?php echo $this->getJsUrl() ?>spacer.gif';
+    var BASE_URL = '<?php echo $this->getUrl('*') ?>';
+    var SKIN_URL = '<?php echo $this->getSkinUrl() ?>';
+    var FORM_KEY = '<?php echo $this->getFormKey() ?>';
+</script>
+
+<?php echo $this->getCssJsHtml() ?>
+
+<?php if($this->getCanLoadExtJs()): ?>
+<script type="text/javascript">
+    Ext.BLANK_IMAGE_URL = BLANK_IMG;
+    Ext.UpdateManager.defaults.loadScripts = false;
+    Ext.UpdateManager.defaults.disableCaching = true;
+</script>
+<?php endif; ?>
+
+<?php if($this->getCanLoadTinyMce()): // TinyMCE is broken when loaded through index.php ?>
+<script type="text/javascript" src="<?php echo $this->getJsUrl() ?>tiny_mce/tiny_mce.js"></script>
+<?php endif; ?>
+
+<script type="text/javascript">
+    Fieldset.addToPrefix(<?php echo Mage::helper('adminhtml')->getCurrentUserId() ?>);
+</script>
+
+
+
+
+
+
+<!--    Ab hier neu -->
+<script type="text/javascript" src="/skin/adminhtml/zefania/javascript/jquery/jquery.js"></script>
+<script type="text/javascript" src="/skin/adminhtml/zefania/javascript/jquery/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="/skin/adminhtml/zefania/javascript/bootstrap.min.js"></script>
+<script>var $j = jQuery.noConflict();</script>
+<link href="/skin/adminhtml/zefania/stylesheet/shCore.css" rel="stylesheet" type="text/css">
+<link href="/skin/adminhtml/zefania/stylesheet/shThemeDefault.css" rel="stylesheet" type="text/css">
+<link href="/skin/adminhtml/zefania/stylesheet/bootstrap.min.css" rel="stylesheet">
+<link href="/skin/adminhtml/zefania/stylesheet/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="/skin/adminhtml/zefania/stylesheet/bootstrap-overrides.css" rel="stylesheet">
+<link href="/skin/adminhtml/zefania/stylesheet/font-awesome.css" rel="stylesheet">
+<link href="/skin/adminhtml/zefania/stylesheet/zefaniadmin.css" rel="stylesheet" type="text/css">
+<link href="/skin/adminhtml/zefania/stylesheet/admindesign.css" rel="stylesheet"> 
+<link href="/skin/adminhtml/zefania/stylesheet/layouts.css" rel="stylesheet">
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>    <!-- Firefox  -->
+
+
+<script type="text/javascript">
+
+	function hideSidebar() {
+		$j(document.getElementById('nav-bar')).collapse('hide');
+		var xcontentsize = $j('.xcontent').css('margin-left');
+		$j.cookie('xcontsize', xcontentsize, { expires : 10, path : '/'});
+		$j('.xcontent').css('margin-left', '0px');
+		$j(document.getElementById('menu-toggler2')).off('click');
+		$j(document.getElementById('menu-toggler2')).click(function(){ showSidebar();} );
+		$j.cookie('sidebartoggle', 0, { expires : 10, path : '/'});
+	};
+
+	function showSidebar() {
+		$j(document.getElementById('dashboard-menu')).collapse('show');
+		$j('.xcontent').css('margin-left', '180px');
+		$j('#dashboard-menu').css('cssText','min-height: 900px !important;');
+		$j('#dashboard-menu').removeClass('in collapse');
+		$j(document.getElementById('menu-toggler2')).off('click');
+		$j(document.getElementById('menu-toggler2')).click(function(){ hideSidebar();} );
+		$j.cookie('sidebartoggle', 1, { expires : 10, path : '/'});
+
+	};
+
+	$j(window).resize(function() {
+		$j('.xcontent').css('margin-left','');
+		if ($j.cookie('sidebartoggle') == 0) hideSidebar(); else showSidebar();
+	})
+
+	$j(document).ready(function(){
+
+		$j("a.link-logout").click( function(){ $j.cookie('menuitem', 0, { path: '/' }); } );
+		
+		$j(document.getElementById('menu-toggler2')).click(function(){hideSidebar();});
+
+		if ($j.cookie('sidebartoggle') == 0) showSidebar();
+
+		$j("#dashboard-menu li a").each( function(x) {
+			$j(this).attr('id', 'treeview-head'+(x+1));
+		});
+
+		$j("#dashboard-menu ul.submenu li a").each( function(x) {		/* menupunkte anpassen */
+			$j(this).attr('id', 'treeview'+(x+1));
+		});
+		
+		$j("#dashboard-menu .dropdown-toggle").click(function (e) {
+			e.preventDefault();
+			var $jitem = $j(this).parent();
+			if (!$jitem.hasClass("active")) {
+				$j('#sidebar-nav #dashboard-menu .active .submenu li .active').each(function(idx){
+					$j(this).removeClass('active');
+				});
+				$j('#sidebar-nav #dashboard-menu .active .submenu').each(function(idx){
+					$j(this).hide();
+					$j(this).removeClass('active');
+					$j(this).parent().removeClass('active');		
+				});
+			}
+			$jitem.toggleClass("active");
+			if ($jitem.hasClass("active")) {
+				$jitem.find(".submenu").slideDown("fast");
+			} else {
+				$jitem.find(".submenu").slideUp("fast");
+			}
+		});
+
+		var $jmenu = $j("#sidebar-nav");
+		$j("body").click(function () {
+			if ($jmenu.hasClass("display")) {
+				$jmenu.removeClass("display");
+			}
+		});
+		$jmenu.click(function(e) {
+			e.stopPropagation();
+		});
+		$j("#menu-toggler").click(function (e) {
+			e.stopPropagation();    
+			$jmenu.toggleClass("display");    
+		});  
+
+		$j('.list tbody td a').each(function(idx){
+				// $j(this).removeClass();
+				$j(this).addClass('btn btn-small');
+				$j(this).css('padding','2px 7px');
+				$j(this).css('margin-right','2px');
+				$j(this).css('text-decoration','none');
+		});
+		$j('.list tbody td').each(function(idx){
+			if (!($j(this).parent().hasClass('filter'))) {
+				var linktxt = $j(this).html();
+				if (!linktxt.match('<div class="image">') && linktxt.match('<a') && (linktxt.match('onclick=') || linktxt.match('href=')) ) {
+					var neulinktxt = linktxt.replace('[','');
+					var neulinktxt = neulinktxt.replace('[','');
+					var neulinktxt = neulinktxt.replace(']','');
+					var neulinktxt = neulinktxt.replace(']','');
+					if (linktxt) $j(this).html(neulinktxt); 
+				};
+			};
+		});
+
+		jQuery('#sidebar-nav #dashboard-menu li ul.submenu li a').click(function() {			/*  speichere geklickten link des menus im cookie */
+			$j.cookie('menuitem',($j(this).attr('id')), { expires : 10, path : '/'});
+			$j('#sidebar-nav #dashboard-menu li#parent.active').removeClass('active');
+			$j('#sidebar-nav #dashboard-menu li#parent.active .submenu li .active').removeClass('active');
+			$j('#sidebar-nav #dashboard-menu .active .submenu').hide();
+			$j('#sidebar-nav #dashboard-menu .active .submenu').removeClass('active');
+		});
+		
+		if ($j.cookie('menuitem') != null) {
+			$j(document.getElementById($j.cookie('menuitem'))).parent().addClass('active');   /*  und aktiviere gewähltes element */
+			$j(document.getElementById($j.cookie('menuitem'))).closest(".submenu").show();   
+			$j(document.getElementById($j.cookie('menuitem'))).closest(".submenu").addClass('active');   
+			$j(document.getElementById($j.cookie('menuitem'))).closest(".submenu").parent().addClass('active');  
+		};
+
+
+		$j('.xcontent').css({'min-height' : '1070px'});		
+
+		$j('tbody tr').hover(function() {
+			$j(this).addClass('odd');
+		}, function() {
+			$j(this).removeClass('odd');
+		});
+		
+		
+	})
+
+</script>
+
+<!-- bis hier neu -->
+
+
+
+
+<?php echo $this->helper('core/js')->getTranslatorScript() ?>
+<?php echo $this->getChildHtml('calendar'); ?>
+<?php echo $this->getChildHtml('optional_zip_countries'); ?>

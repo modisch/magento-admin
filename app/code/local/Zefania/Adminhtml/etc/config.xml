@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Zefania_Adminhtml>
+            <version>0.1.1</version>
+        </Zefania_Adminhtml>
+    </modules>
+    <stores>
+        <admin>
+            <!-- override default admin design package and theme -->
+            <design>
+                <package>
+                    <name>default</name>
+                </package>
+                <theme>
+                    <default>zefania</default>
+                </theme>
+            </design>
+        </admin>
+    </stores>
+</config>
