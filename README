@@ -3,7 +3,7 @@
 THIS IS NOT FOR MAGENTO 2 !!!!
 
 
-This extension creates a new skin for the administration tool. It creates toggleable menu on the left side, enhances graphic design, new font, colors, newly designed table highlighters, etc. The new skin design is highly responsive and optimized for PCs, Tablets, SmartPhones.
+This extension creates a new skin for the administration tool. It creates a hideable menu on the left instead on top, enhances graphic design, new font, colors, newly designed table highlighters, etc. The new skin design is highly responsive and optimized for PCs, Tablets, SmartPhones.
 
 Tested and working well in Magento 1.9.x 
 
